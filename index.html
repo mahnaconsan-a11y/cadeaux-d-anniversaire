@@ -1,0 +1,44 @@
+<script>
+const body = document.body;
+const openEnvelope = document.getElementById("openEnvelope");
+const closeBtn = document.getElementById("closeBtn");
+const sky = document.getElementById("sky");
+const music = document.getElementById("music");
+
+// Ouvrir la lettre + lancer la musique
+function openLetter() {
+    body.classList.add("open");
+
+    music.volume = 0.35; // volume à 35 %
+    music.play().catch(() => {});
+}
+
+// Refermer la lettre + arrêter la musique
+function closeLetter() {
+    body.classList.remove("open");
+    music.pause();
+    music.currentTime = 0;
+}
+
+openEnvelope.addEventListener("click", openLetter);
+
+openEnvelope.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        openLetter();
+    }
+});
+
+closeBtn.addEventListener("click", closeLetter);
+
+// Création des étoiles
+for (let i = 0; i < 80; i++) {
+    const star = document.createElement("span");
+    star.className = "star";
+    star.style.left = Math.random() * 100 + "%";
+    star.style.top = Math.random() * 100 + "%";
+    star.style.setProperty("--speed", (1.5 + Math.random() * 3.7) + "s");
+    star.style.animationDelay = (-Math.random() * 4) + "s";
+    sky.appendChild(star);
+}
+</script>
